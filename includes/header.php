@@ -64,11 +64,12 @@
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="SignupLogin.php"><i class="fas fa-user"></i>
-        
-        Account</a>
-      </li>
+      
+<?php if(strlen($_SESSION['login']))
+    {   ?>
+    <li><a class="nav-link" href="#"><i class="icon fa fa-user"></i><?php echo htmlentities($_SESSION['username']);?></a></li>
+				<?php } ?>
+      
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-heart"></i>  Wishlist</i></a>
       </li>
@@ -78,6 +79,20 @@
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-truck"></i>  Track Order</i></a>
       </li>
+      <?php if(strlen($_SESSION['login'])==0)
+    {   ?>
+<li class="nav-item">
+        <a class="nav-link" href="SignupLogin.php"><i class="fas fa-user"></i>
+        
+        Account</a>
+      </li>
+<?php }
+else{ ?>
+	
+				<li><a class="nav-link" href="logout.php"><i class="icon fa fa-sign-out"></i>Logout</a></li>
+				<?php } ?>	
+				</ul>
+			</div>
     </ul>
   </div>
 </nav>
