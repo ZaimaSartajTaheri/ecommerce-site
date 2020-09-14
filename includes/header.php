@@ -7,7 +7,7 @@
  
 <style>
 .search-bar{
-  width:35vw !important;
+  width:30vw !important;
   border-top-right-radius:0!important;
   border-bottom-right-radius:0!important;
 }
@@ -41,6 +41,10 @@
 .navbar-toggler-icon {
   background-image: url( "data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(204, 0, 0, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E")!important; 
 }
+.logo{
+  
+}
+
 </style>
   
 
@@ -50,7 +54,7 @@
 
 <div class="container">
 <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand mr-3" href="index.php">Shop Now</a>
+  <a class="navbar-brand mr-3" href="index.php"><img class="logo" src="../logo.jpg" alt=""/></a>
   <button class="navbar-toggle navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -65,10 +69,7 @@
         <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
       </li>
       
-<?php if(strlen($_SESSION['login']))
-    {   ?>
-    <li><a class="nav-link" href="#"><i class="icon fa fa-user"></i><?php echo htmlentities($_SESSION['username']);?></a></li>
-				<?php } ?>
+
       
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-heart"></i>  Wishlist</i></a>
@@ -79,6 +80,11 @@
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-truck"></i>  Track Order</i></a>
       </li>
+      <?php if(strlen($_SESSION['login']))
+    {   ?>
+    <li><a class="nav-link" href="my-account.php"><i class="icon fa fa-user"></i> <?php echo htmlentities($_SESSION['username']);?></a></li>
+				<?php } ?>
+
       <?php if(strlen($_SESSION['login'])==0)
     {   ?>
 <li class="nav-item">

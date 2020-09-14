@@ -56,9 +56,6 @@ $cid=intval($_GET['cid']);
 <!-- Demo Purpose Only. Should be removed in production -->
 
 <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-<style>
-
-</style>
 
 
 

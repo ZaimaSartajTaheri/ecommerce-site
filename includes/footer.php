@@ -86,7 +86,7 @@ footer{
 .center .content .phone{
   margin: 15px 0;
 }
-.right form .text{
+.right form .footer-text{
   font-size: 1.0625rem;
   margin-bottom: 2px;
   color: #d9d9d9;
@@ -162,15 +162,15 @@ footer{
     <div class="content">
       <div class="place">
         <span class="fas fa-map-marker-alt"></span>
-        <span class="text">Bashundhara,Dhaka</span>
+        <span class="footer-text">Bashundhara,Dhaka</span>
       </div>
       <div class="phone">
         <span class="fas fa-phone-alt"></span>
-        <span class="text">+880-1552356034</span>
+        <span class="footer-text">+880-1552356034</span>
       </div>
       <div class="email">
         <span class="fas fa-envelope"></span>
-        <span class="text">shop.now@yahoo.com</span>
+        <span class="footer-text">shop.now@yahoo.com</span>
       </div>
     </div>
   </div>
