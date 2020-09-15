@@ -2,6 +2,22 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
+if(isset($_GET['action']) && $_GET['action']=="add"){
+	$id=intval($_GET['id']);
+	if(isset($_SESSION['cart'][$id])){
+		$_SESSION['cart'][$id]['quantity']++;
+	}else{
+		$sql_p="SELECT * FROM products WHERE id={$id}";
+		$query_p=mysqli_query($con,$sql_p);
+		if(mysqli_num_rows($query_p)!=0){
+			$row_p=mysqli_fetch_array($query_p);
+			$_SESSION['cart'][$row_p['id']]=array("quantity" => 1, "price" => $row_p['productPrice']);
+			header('location:index.php');
+		}else{
+			$message="Product ID is invalid";
+		}
+	}
+}
 
 ?>
 <!DOCTYPE html>
@@ -19,6 +35,14 @@ include('includes/config.php');
 
 
 <!-- Customizable CSS -->
+<link rel="stylesheet" href="assets/css/owl.carousel.css">
+<link rel="stylesheet" href="assets/css/owl.transitions.css">
+<link rel="stylesheet" href="assets/css/owl.theme.css">
+	    
+		
+		
+		
+
 
 
 
@@ -31,6 +55,7 @@ include('includes/config.php');
 .slider img{
     height:300px!important;
 }
+
 </style>
 
 
@@ -117,7 +142,7 @@ while ($row=mysqli_fetch_array($ret))
 		<div class="product-image">
 			<div class="image">
 				<a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
-				<img  src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" data-echo="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"  width="180" height="300" alt=""></a>
+				<img  src="./admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" data-echo="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"  width="180" height="300" alt=""/></a>
 			</div><!-- /.image -->			
 
 			                        		   
@@ -387,7 +412,7 @@ while ($row=mysqli_fetch_array($ret))
 										<div class="product-image">
 											<div class="image">
 												<a href="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" data-lightbox="image-1" data-title="<?php echo htmlentities($row['productName']);?>">
-													<img data-echo="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" width="170" height="174" alt="">
+													<img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" width="170" height="174" alt=""/>
 													<div class="zoom-overlay"></div>
 												</a>					
 											</div><!-- /.image -->
@@ -420,23 +445,68 @@ while ($row=mysqli_fetch_array($ret))
          </div> 
         </div>
     </div>
+	
+	<script src="assets/js/owl.carousel.min.js"></script>
+    
+<script>
+$(document).ready(function () {
+$('.home-owl-carousel').each(function(){
+
+var owl = $(this);
+var  itemPerLine = owl.data('item');
+if(!itemPerLine){
+	itemPerLine = 4;
+}
+owl.owlCarousel({
+	items : itemPerLine,
+	itemsTablet:[768,2],
+	navigation : true,
+	pagination : false,
+
+	navigationText: ["", ""]
+});
+});
+
+$('.homepage-owl-carousel').each(function(){
+
+var owl = $(this);
+var  itemPerLine = owl.data('item');
+if(!itemPerLine){
+	itemPerLine = 4;
+}
+owl.owlCarousel({
+	items : itemPerLine,
+	itemsTablet:[768,2],
+	itemsDesktop : [1199,2],
+	navigation : true,
+	pagination : false,
+
+	navigationText: ["", ""]
+});
+});
+
+$(".best-seller").owlCarousel({
+    items : 3,
+    navigation : true,
+    itemsDesktopSmall :[979,2],
+    itemsDesktop : [1199,2],
+    slideSpeed : 300,
+    pagination: false,
+    paginationSpeed : 400,
+    navigationText: ["", ""]
+});
+
+
+});
+</script>
+	
+    
     
 
-	<script>
-		$(document).ready(function(){ 
-			$(".changecolor").switchstylesheet( { seperator:"color"} );
-			$('.show-theme-options').click(function(){
-				$(this).parent().toggleClass('open');
-				return false;
-			});
-		});
-
-		$(window).bind("load", function() {
-		   $('.show-theme-options').delay(2000).trigger('click');
-		});
-	</script>
-    
-    
+	<!-- For demo purposes – can be removed on production -->
+	
+	
+	
  
 
 </body>
