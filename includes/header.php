@@ -1,3 +1,18 @@
+<?php 
+
+ if(isset($_GET['action'])){
+		if(!empty($_SESSION['cart'])){
+		foreach($_POST['quantity'] as $key => $val){
+			if($val==0){
+				unset($_SESSION['cart'][$key]);
+			}else{
+        $_SESSION['cart'][$key]['quantity']=$val;
+        
+			}
+		}
+		}
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +22,7 @@
  
 <style>
 .search-bar{
-  width:30vw !important;
+  width:20vw !important;
   border-top-right-radius:0!important;
   border-bottom-right-radius:0!important;
 }
@@ -60,25 +75,80 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="form-inline my-2 mr-auto my-lg-0">
-      <input class="form-control search-bar" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn my-2 my-sm-0 search-button" type="submit"><i class="fas fa-search"></i></button>
+  <!-- <form name="search" method="post" action="search-result.php">
+        <div class="control-group">
+
+            <input class="search-field" placeholder="Search here..." name="product" required="required" />
+
+            <button class="search-button" type="submit" name="search"></button>    
+
+        </div>
+    </form> -->
+    <form name="search" method="post" action="search-result.php" class="form-inline my-2 mr-auto my-lg-0">
+      <input class="form-control search-bar" type="search" name="product" required="required" placeholder="Search" aria-label="Search">
+      <button class="btn my-2 my-sm-0 search-button" type="submit" name="search"><i class="fas fa-search"></i></button>
     </form>
     <ul class="navbar-nav">
+    
+<?php
+    if(!empty($_SESSION['cart'])){
+        
+       $sql = "SELECT * FROM products WHERE id IN(";
+			foreach($_SESSION['cart'] as $id => $value){
+			$sql .=$id. ",";
+			}
+			$sql=substr($sql,0,-1) . ") ORDER BY id ASC";
+			$query = mysqli_query($con,$sql);
+			$totalprice=0;
+			$totalqunty=0;
+			if(!empty($query)){
+			while($row = mysqli_fetch_array($query)){
+				$quantity=$_SESSION['cart'][$row['id']]['quantity'];
+				$subtotal= $_SESSION['cart'][$row['id']]['quantity']*$row['productPrice']+$row['shippingCharge'];
+				$totalprice += $subtotal;
+        $_SESSION['qnty']=$totalqunty+=$quantity;
+        $_SESSION['tp']=$totalprice;
+      }}
+
+	?>
+	
+			<div class="items-cart-inner">
+				<div class="total-price-basket">
+					<span class="lbl">cart -</span>
+					<span class="total-price">
+						<span class="sign">Rs.</span>
+						<span class="value"><?php echo $_SESSION['tp']; ?></span>
+					</span>
+				</div>
+				<li class="nav-item">
+        <a class="nav-link" href="my-cart.php"><i class="fas fa-shopping-cart"></i></a>
+        </li>
+				<div class="basket-item-count"><span class="count"><?php echo $_SESSION['qnty'];?></span></div>
+			
+		    </div>
+        
+	
+        
+		
+  <?php   }
+    else { ?>
+
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+        <span class="count">0</span>
       </li>
+         <?php }?>
       
 
       
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-heart"></i>  Wishlist</i></a>
+        <a class="nav-link" href="my-wishlist.php"><i class="fas fa-heart"></i>  Wishlist</i></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-store"></i>  Sell</i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-truck"></i>  Track Order</i></a>
+        <a class="nav-link" href="track-orders.php"><i class="fas fa-truck"></i>  Track Order</i></a>
       </li>
       <?php if(strlen($_SESSION['login']))
     {   ?>

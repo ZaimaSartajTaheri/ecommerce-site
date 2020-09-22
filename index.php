@@ -4,6 +4,7 @@ error_reporting(0);
 include('includes/config.php');
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
+	
 	if(isset($_SESSION['cart'][$id])){
 		$_SESSION['cart'][$id]['quantity']++;
 	}else{
@@ -27,11 +28,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Portal Home Page</title>
 <!-- Bootstrap Core CSS -->
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
 
 
 <!-- Customizable CSS -->
@@ -63,6 +62,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 
 </head>
 <body>
+
     <header>
      <?php include('includes/header.php');?>
     </header>
